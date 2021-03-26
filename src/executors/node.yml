@@ -1,0 +1,11 @@
+description: >
+  An executor for the Skpr Node image.
+
+parameters:
+  tag:
+    default: 14-1.x
+    description: The Skpr Node image version tag
+    type: string
+
+docker:
+  - image: skpr/node:<<parameters.tag>>

@@ -1,0 +1,36 @@
+description: >
+  Build the Drupal front-end.
+
+executor: node
+
+parameters:
+  theme_path:
+    description: The Drupal theme path.
+    type: string
+
+steps:
+  - checkout
+  - restore_cache:
+      keys:
+        - deps-node-v2-{{ arch }}-{{ checksum "package-lock.json" }}
+        - deps-node-v2-{{ arch }}-
+  - run:
+      name: Init Frontend Dependencies
+      command: make init-frontend
+  - save_cache:
+      key: deps-node-v2-{{ arch }}-{{ checksum "package-lock.json" }}
+      paths:
+        - ~/.npm
+  - run:
+      name: Lint
+      command: make lint-frontend
+  - run:
+      name: Build
+      command: make styleguide
+  - persist_to_workspace:
+      root: /data
+      paths:
+        - app/styleguide
+        - <<parameters.theme_path>>/css
+        - <<parameters.theme_path>>/js
+        - node_modules

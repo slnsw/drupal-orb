@@ -1,0 +1,35 @@
+description: >
+  Build the Drupal backend.
+
+executor: php
+
+steps:
+  - checkout
+  - restore_cache:
+      keys:
+        - deps-php-{{ arch }}-{{ checksum "composer.lock" }}
+        - deps-php-{{ arch }}-
+  - run:
+      name: Init Backend Dependencies
+      command: make init-backend
+  - save_cache:
+      key: deps-composer-{{ arch }}-{{ checksum "composer.lock" }}
+      paths:
+        - app/core
+        - app/modules/contrib
+        - app/themes/contrib
+        - vendor
+  - run:
+      name: Lint
+      command: make lint-backend
+  - run:
+      name: Security check
+      command: make security-check
+  - persist_to_workspace:
+      root: /data
+      paths:
+        - bin
+        - app/core
+        - app/modules
+        - app/themes
+        - vendor

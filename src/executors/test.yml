@@ -1,0 +1,23 @@
+description: >
+  An executor for the Skpr test image.
+
+parameters:
+  tag:
+    default: 7.4-1.x
+    description: The Skpr PHP image tag
+    type: string
+  db_image:
+    description: The Skpr database image tag
+    type: string
+
+docker:
+  - image: skpr/php-circleci:<<parameters.tag>>
+  - image: 221404021726.dkr.ecr.ap-southeast-2.amazonaws.com/skpr-shared-pnx-d8/mysql:dev-default-latest
+    aws_auth:
+     aws_access_key_id: $SKPR_USERNAME
+     aws_secret_access_key: $SKPR_PASSWORD
+  - image: selenium/standalone-chrome
+environment:
+  COMPOSER_MEMORY_LIMIT: -1
+
+working_directory: /data

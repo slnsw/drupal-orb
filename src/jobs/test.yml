@@ -1,0 +1,37 @@
+description: >
+  Build the Drupal backend.
+
+executor: test
+
+steps:
+  - checkout
+  - attach_workspace:
+      at: /data
+  - run:
+      name: "Start: PHP-FPM"
+      command: php-fpm -F
+      background: true
+  - run:
+      name: "Start: Nginx"
+      command: nginx
+      background: true
+  - run:
+      name: "Setup: Application"
+      command: make deploy
+  - run:
+      name: "Test: Init"
+      command: make test-init
+  - run:
+      name: "Test: Application"
+      command: for i in `./bin/phpunit-finder | circleci tests split --split-by=timings`; do /bin/bash -c "./bin/phpunit $i --log-junit build/logs/phpunit/$(basename $i).xml"; done
+  - run:
+      name: "Test: Nightwatch"
+      command: make ci-nightwatch
+  - store_test_results:
+      path: build/logs
+  - store_artifacts:
+      path: /tmp/browser_output
+      destination: tr1
+  - store_artifacts:
+      path: build/logs/nightwatch
+      destination: tr1

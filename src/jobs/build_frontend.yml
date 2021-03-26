@@ -1,12 +1,18 @@
 description: >
   Build the Drupal front-end.
 
-executor: node
-
 parameters:
+  tag:
+    default: 14-1.x
+    description: The Skpr PHP image version tag
+    type: string
   theme_path:
     description: The Drupal theme path.
     type: string
+
+executor:
+  name: node
+  tag: <<parameters.tag>>
 
 steps:
   - checkout

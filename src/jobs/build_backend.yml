@@ -1,7 +1,15 @@
 description: >
   Build the Drupal backend.
 
-executor: php
+parameters:
+  tag:
+    default: 7.4-1.x
+    description: The Skpr PHP image version tag
+    type: string
+
+executor:
+  name: php
+  tag: <<parameters.tag>>
 
 steps:
   - checkout

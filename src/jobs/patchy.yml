@@ -1,0 +1,35 @@
+description: >
+  Automated patching.
+
+parameters:
+  tag:
+    default: 7.4-1.x
+    description: The Skpr PHP image tag
+    type: string
+  db_image:
+    description: The Skpr database image tag
+    type: string
+  ssh_fingerprint:
+    description: The SSH fingerprint used for writing back to the project repo.
+    type: string
+
+executor:
+  name: test
+  tag: <<parameters.tag>>
+  db_image: <<parameters.db_image>>
+
+steps:
+  - add_ssh_keys:
+      fingerprints:
+        - <<parameters.ssh_fingerprint>>
+  - checkout
+  - restore_cache:
+      keys:
+        - deps-php-{{ arch }}-{{ checksum "composer.lock" }}
+        - deps-php-{{ arch }}-
+  - run:
+      name: Init
+      command: make composer mkdirs
+  - run:
+      name: Patchy
+      command: <<include(scripts/patchy.sh)>>

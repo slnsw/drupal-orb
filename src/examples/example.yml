@@ -6,8 +6,32 @@ description: >
 usage:
   version: 2.1
   orbs:
-    <orb-name>: <namespace>/<orb-name>@1.2.3
+    drupal: pnx/drupal@1.0.0
+    slack: circleci/slack@3.4.2
   workflows:
-    use-my-orb:
+    # Build frontend and backend in parallel, before functional tests.
+    build_and_test:
       jobs:
-        - <orb-name>/<job-name>
+        - build_frontend:
+            context: skpr-example
+            theme_path: app/themes/my_theme
+            tag: 14-1.x
+        - build_backend:
+            context: skpr-example
+            tag: 7.4-1.x
+        - test:
+            context: skpr-example
+            tag: 7.4-1.x
+            db_image: <ecr repository url>/<image>:<tag>
+            requires:
+              - build_frontend
+              - build_backend
+    patchy:
+      jobs:
+        - patchy:
+            context: skpr-example
+            tag: 7.4-1.x
+            db_image: <ecr repository url>/<image>:<tag>
+      triggers:
+        - schedule:
+            cron: "0 21 * * 3" # Wed 21:00 UTC

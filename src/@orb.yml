@@ -8,3 +8,4 @@ display:
   home_url: "https://www.previousnext.com.au"
   source_url: "https://www.github.com/pnx/drupal-orb"
   orbs:
+    slack: circleci/slack@3.4.2

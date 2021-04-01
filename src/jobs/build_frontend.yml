@@ -37,6 +37,6 @@ steps:
       root: /data
       paths:
         - app/styleguide
-        - <<parameters.theme_path>>/css
-        - <<parameters.theme_path>>/js
+        - "<<parameters.theme_path>>/css"
+        - "<<parameters.theme_path>>/js"
         - node_modules

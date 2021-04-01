@@ -9,3 +9,5 @@ parameters:
 
 docker:
   - image: skpr/node:<<parameters.tag>>
+
+working_directory: /data

@@ -14,11 +14,9 @@ usage:
       jobs:
         - build_frontend:
             context: skpr-example
-            theme_path: app/themes/my_theme
-            tag: 14-1.x
+            theme_path: app/themes/previousnext_d8_theme
         - build_backend:
             context: skpr-example
-            tag: 7.4-1.x
         - test:
             context: skpr-example
             tag: 7.4-1.x

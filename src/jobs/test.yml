@@ -9,6 +9,14 @@ parameters:
   db_image:
     description: The Skpr database image tag
     type: string
+  pre-test:
+    type: steps
+    description: Provide any optional pre-test steps you would like to run.
+    default: []
+  post-test:
+    type: steps
+    description: Provide any optional post-test steps you would like to run.
+    default: []
 
 executor:
   name: test
@@ -19,6 +27,7 @@ steps:
   - checkout
   - attach_workspace:
       at: /data
+  - steps: <<parameters.pre-test>>
   - run:
       name: "Start: PHP-FPM"
       command: php-fpm -F
@@ -47,4 +56,4 @@ steps:
   - store_artifacts:
       path: build/logs/nightwatch
       destination: tr1
-  - slack/notify-on-failure
+  - steps: <<parameters.post-test>>

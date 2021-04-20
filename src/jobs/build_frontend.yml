@@ -9,6 +9,31 @@ parameters:
   theme_path:
     description: The Drupal theme path.
     type: string
+  init:
+    type: steps
+    description: Initialise the front-end dependencies.
+    default:
+      - run:
+          name: Init
+          command: make init-frontend
+  lint:
+    type: steps
+    description: Check the codebase against style guidelines.
+    default:
+      - run:
+          name: Lint
+          command: make lint-frontend
+  build:
+    type: steps
+    description: Build the front-end components.
+    default:
+      - run:
+          name: Build
+          command: make styleguide
+  unit-test:
+    type: steps
+    description: Run the front-end unit tests.
+    default: []
 
 executor:
   name: node
@@ -20,19 +45,14 @@ steps:
       keys:
         - deps-node-v2-{{ arch }}-{{ checksum "package-lock.json" }}
         - deps-node-v2-{{ arch }}-
-  - run:
-      name: Init Frontend Dependencies
-      command: make init-frontend
+  - steps: <<parameters.init>>
   - save_cache:
       key: deps-node-v2-{{ arch }}-{{ checksum "package-lock.json" }}
       paths:
         - ~/.npm
-  - run:
-      name: Lint
-      command: make lint-frontend
-  - run:
-      name: Build
-      command: make styleguide
+  - steps: <<parameters.lint>>
+  - steps: <<parameters.build>>
+  - steps: <<parameters.unit-test>>
   - persist_to_workspace:
       root: /data
       paths:

@@ -11,8 +11,27 @@ parameters:
     type: string
   pre-test:
     type: steps
-    description: Provide any optional pre-test steps you would like to run.
-    default: []
+    description: Provide any optional pre-test steps you would like to run before the application starts.
+  setup:
+    type: steps
+    description: Provide the test setup steps you would like to run just before tests are run.
+    default:
+      - run:
+          name: "Setup: Application"
+          command: make deploy
+      - run:
+          name: "Test: Init"
+          command: make test-init
+  test:
+    type: steps
+    description: Provide the actual test steps you would like to run.
+    default:
+      - run:
+          name: "Test: Application"
+          command: for i in `./bin/phpunit-finder | circleci tests split --split-by=timings`; do /bin/bash -c "./bin/phpunit $i --log-junit build/logs/phpunit/$(basename $i).xml"; done
+      - run:
+          name: "Test: Nightwatch"
+          command: make ci-nightwatch
   post-test:
     type: steps
     description: Provide any optional post-test steps you would like to run.
@@ -36,18 +55,8 @@ steps:
       name: "Start: Nginx"
       command: nginx
       background: true
-  - run:
-      name: "Setup: Application"
-      command: make deploy
-  - run:
-      name: "Test: Init"
-      command: make test-init
-  - run:
-      name: "Test: Application"
-      command: for i in `./bin/phpunit-finder | circleci tests split --split-by=timings`; do /bin/bash -c "./bin/phpunit $i --log-junit build/logs/phpunit/$(basename $i).xml"; done
-  - run:
-      name: "Test: Nightwatch"
-      command: make ci-nightwatch
+  - steps: <<parameters.setup>>
+  - steps: <<parameters.test>>
   - store_test_results:
       path: build/logs
   - store_artifacts:

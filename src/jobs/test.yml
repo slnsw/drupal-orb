@@ -12,6 +12,7 @@ parameters:
   pre-test:
     type: steps
     description: Provide any optional pre-test steps you would like to run before the application starts.
+    default: []
   setup:
     type: steps
     description: Provide the test setup steps you would like to run just before tests are run.

@@ -23,7 +23,7 @@ else
   git add config-export
   git commit -m "[PATCHY] Updates config" || echo "No config changes"
   git push -f origin $PATCHY_BRANCH
-  hub pull-request --no-edit -b master -h $PATCHY_BRANCH || true
+  gh pr create --fill || true
 fi
 # Reset defaults.
 git checkout $CURRENT_BRANCH

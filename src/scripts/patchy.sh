@@ -15,7 +15,7 @@ composer2 update --prefer-dist --no-interaction --no-progress --no-suggest
 if git diff-files --quiet --ignore-submodules -- composer.lock ; then
   echo "No composer changes"
 else
-  echo -e "[PATCHY] Updates composer dependencies\n\n" > /tmp/commit-message.txt
+  touch /tmp/commit-message.txt
   ./bin/composer-lock-diff --md --no-links >> /tmp/commit-message.txt
   git add composer.lock
   git commit -F /tmp/commit-message.txt
@@ -23,7 +23,7 @@ else
   git add config-export
   git commit -m "[PATCHY] Updates config" || echo "No config changes"
   git push -f origin $PATCHY_BRANCH
-  gh pr create --fill || true
+  gh pr create -t "[PATCHY] Updates composer dependencies" -F /tmp/commit-message.txt || true
 fi
 # Reset defaults.
 git checkout $CURRENT_BRANCH

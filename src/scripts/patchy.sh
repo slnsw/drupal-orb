@@ -25,7 +25,7 @@ else
   git add config-export
   git commit -m "[PATCHY] Updates config" || echo "No config changes"
   git push -f origin $PATCHY_BRANCH
-  gh pr create -t "[PATCHY] Updates composer dependencies" -F /tmp/lock-diff.txt || true
+  gh pr create -t "[PATCHY] Updates composer dependencies" -F /tmp/lock-diff.txt -l "dependencies" -l "php" || true
 fi
 # Reset defaults.
 git checkout $CURRENT_BRANCH

@@ -9,6 +9,10 @@ parameters:
   theme_path:
     description: The Drupal theme path.
     type: string
+  library_path:
+    description: The Drupal library path.
+    type: string
+    default: ""
   init:
     type: steps
     description: Initialise the front-end dependencies.
@@ -57,6 +61,7 @@ steps:
       root: /data
       paths:
         - app/styleguide
+        - <<parameters.library_path>>
         - <<parameters.theme_path>>/css
         - <<parameters.theme_path>>/js
         - node_modules

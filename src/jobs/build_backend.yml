@@ -2,10 +2,9 @@ description: >
   Build the Drupal backend.
 
 parameters:
-  tag:
-    default: 7.4-1.x
-    description: The Skpr PHP image version tag
-    type: string
+  executor:
+    type: executor
+    description: The executor to use.
   init:
     type: steps
     description: Initialise the backend dependencies.
@@ -28,9 +27,7 @@ parameters:
     description: Run the the backend-end tests.
     default: []
 
-executor:
-  name: php
-  tag: <<parameters.tag>>
+executor: <<parameters.executor>>
 
 steps:
   - checkout

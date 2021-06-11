@@ -4,14 +4,7 @@ description: >
 parameters:
   executor:
     type: executor
-    default: drupal/test
-  tag:
-    default: 7.4-1.x
-    description: The Skpr PHP image tag
-    type: string
-  db_image:
-    description: The Skpr database image tag
-    type: string
+    description: The executor to use.
   pre-test:
     type: steps
     description: Provide any optional pre-test steps you would like to run before the application starts.

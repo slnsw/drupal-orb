@@ -2,10 +2,9 @@ description: >
   Build the Drupal front-end.
 
 parameters:
-  tag:
-    default: 14-1.x
-    description: The Skpr PHP image version tag
-    type: string
+  executor:
+    type: executor
+    description: The executor to use.
   theme_path:
     description: The Drupal theme path.
     type: string
@@ -33,15 +32,13 @@ parameters:
     default:
       - run:
           name: Build
-          command: make styleguide
+          command: make build-frontend
   unit-test:
     type: steps
     description: Run the front-end unit tests.
     default: []
 
-executor:
-  name: node
-  tag: <<parameters.tag>>
+executor: <<parameters.executor>>
 
 steps:
   - checkout

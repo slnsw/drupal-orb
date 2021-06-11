@@ -1,5 +1,9 @@
-description: >
+description: |
   Automated patching.
+
+  The following Make targets are required and will be called:
+   - init-backend
+   - mkdirs
 
 parameters:
   executor:
@@ -22,7 +26,7 @@ steps:
         - deps-php-{{ arch }}-
   - run:
       name: Init
-      command: make composer mkdirs
+      command: make init-backend mkdirs
   - run:
       name: Patchy
       command: <<include(scripts/patchy.sh)>>

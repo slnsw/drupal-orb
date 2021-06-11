@@ -1,5 +1,13 @@
-description: >
-  Build the Drupal backend.
+description: |
+  Test the Drupal application.
+
+  The following Make targets will be called by default:
+   - deploy
+   - test-init
+   - ci-nightwatch
+
+  The default test step assumes you have installed the
+  https://packagist.org/packages/previousnext/phpunit-finder package.
 
 parameters:
   executor:

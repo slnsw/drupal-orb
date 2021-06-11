@@ -1,5 +1,10 @@
-description: >
+description: |
   Build the Drupal front-end.
+
+  The following Make targets are required and will be called:
+   - init-frontend
+   - lint-frontend
+   - build-frontend
 
 parameters:
   executor:

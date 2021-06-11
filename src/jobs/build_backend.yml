@@ -1,5 +1,10 @@
-description: >
+description: |
   Build the Drupal backend.
+
+  The following Make targets are required and will be called:
+   - init-backend
+   - lint-backend
+   - security-check
 
 parameters:
   executor:

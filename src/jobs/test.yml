@@ -2,10 +2,6 @@ description: >
   Build the Drupal backend.
 
 parameters:
-  executor:
-    description: The test executor.
-    type: string
-    default: test
   tag:
     default: 7.4-1.x
     description: The Skpr PHP image tag
@@ -43,7 +39,7 @@ parameters:
     default: []
 
 executor:
-  name: <<parameters.executor>>
+  name: test
   tag: <<parameters.tag>>
   db_image: <<parameters.db_image>>
 

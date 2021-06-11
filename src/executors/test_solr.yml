@@ -1,0 +1,28 @@
+description: >
+  An executor for the Skpr test image with Solr.
+
+parameters:
+  tag:
+    default: 7.4-1.x
+    description: The Skpr PHP image tag
+    type: string
+  db_image:
+    description: The Skpr database image tag
+    type: string
+  solr_tag:
+    default: 7.x-3.x
+    description: The Skpr Solr image tag
+    type: string
+docker:
+  - image: skpr/php-circleci:<<parameters.tag>>
+  - image: <<parameters.db_image>>
+    aws_auth:
+      aws_access_key_id: $SKPR_USERNAME
+      aws_secret_access_key: $SKPR_PASSWORD
+  - image: selenium/standalone-chrome
+  - image: skpr/solr:<<parameters.solr_tag>>
+
+environment:
+  COMPOSER_MEMORY_LIMIT: -1
+
+working_directory: /data

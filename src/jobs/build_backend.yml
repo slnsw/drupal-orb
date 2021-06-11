@@ -53,6 +53,8 @@ steps:
       paths:
         - bin
         - app/core
-        - app/modules
-        - app/themes
+        - app/modules/contrib
+        - app/profiles/contrib
+        - app/themes/contrib
+        - drush/Commands/contrib
         - vendor

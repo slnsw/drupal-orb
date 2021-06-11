@@ -13,13 +13,24 @@ usage:
       jobs:
         - drupal/build_frontend:
             context: skpr-example
-            theme_path: app/themes/previousnext_d8_theme
+            executor:
+              name: drupal/node
+              tag: 14-1.x
+            theme_path: app/themes/mytheme
+            library_path: app/libraries/mylibrary
         - drupal/build_backend:
             context: skpr-example
+            executor:
+              name: drupal/php
+              tag: 8.0-1.x
         - drupal/test:
             context: skpr-example
-            tag: 7.4-1.x
-            db_image: <ecr repository url>/<image>:<tag>
+            executor:
+              name: drupal/test
+              tag: 8.0-1.x
+              db_image: example.com/mysql:dev-default-latest
+            post-test:
+              - slack/notify-on-failure
             requires:
               - drupal/build_frontend
               - drupal/build_backend
@@ -27,8 +38,10 @@ usage:
       jobs:
         - drupal/patchy:
             context: skpr-example
-            tag: 7.4-1.x
-            db_image: <ecr repository url>/<image>:<tag>
+            executor:
+              name: drupal/test
+              tag: 8.0-1.x
+              db_image: example.com/mysql:dev-default-latest
       triggers:
         - schedule:
             cron: "0 21 * * 3" # Wed 21:00 UTC

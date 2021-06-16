@@ -9,14 +9,17 @@ parameters:
   db_image:
     description: The Skpr database image tag
     type: string
-
+  chrome_tag:
+    default: latest
+    description: The Selenium Chrome image tag
+    type: string
 docker:
   - image: skpr/php-circleci:<<parameters.tag>>
   - image: <<parameters.db_image>>
     aws_auth:
      aws_access_key_id: $SKPR_USERNAME
      aws_secret_access_key: $SKPR_PASSWORD
-  - image: selenium/standalone-chrome
+  - image: selenium/standalone-chrome:<<parameters.chrome_tag>>
 environment:
   COMPOSER_MEMORY_LIMIT: -1
 

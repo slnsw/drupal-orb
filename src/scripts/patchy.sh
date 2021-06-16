@@ -11,7 +11,7 @@ git config --global user.email "admin@previousnext.com.au"
 git config --global user.name "Patchy"
 
 git checkout -B $PATCHY_BRANCH
-composer2 update --prefer-dist --no-interaction --no-progress --no-suggest
+COMPOSER_ROOT_VERSION=${CURRENT_BRANCH} composer2 update --prefer-dist --no-interaction --no-progress --no-suggest
 if git diff-files --quiet --ignore-submodules -- composer.lock ; then
   echo "No composer changes"
 else

@@ -13,6 +13,9 @@ parameters:
   executor:
     type: executor
     description: The executor to use.
+  parallelism:
+    type: integer
+    default: 1
   pre-test:
     type: steps
     description: Provide any optional pre-test steps you would like to run before the application starts.
@@ -43,6 +46,8 @@ parameters:
     default: []
 
 executor: <<parameters.executor>>
+
+parallelism: <<parameters.parallelism>>
 
 steps:
   - checkout

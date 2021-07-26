@@ -38,8 +38,8 @@ steps:
   - checkout
   - restore_cache:
       keys:
-        - deps-php-{{ arch }}-{{ checksum "composer.lock" }}
-        - deps-php-{{ arch }}-
+        - deps-composer-{{ arch }}-{{ checksum "composer.lock" }}
+        - deps-composer-{{ arch }}-
   - steps: <<parameters.init>>
   - save_cache:
       key: deps-composer-{{ arch }}-{{ checksum "composer.lock" }}

@@ -22,8 +22,8 @@ steps:
   - checkout
   - restore_cache:
       keys:
-        - deps-php-{{ arch }}-{{ checksum "composer.lock" }}
-        - deps-php-{{ arch }}-
+        - deps-composer-{{ arch }}-{{ checksum "composer.lock" }}
+        - deps-composer-{{ arch }}-
   - run:
       name: Init
       command: make init-backend mkdirs

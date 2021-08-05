@@ -31,6 +31,10 @@ parameters:
     type: steps
     description: Run the the backend-end tests.
     default: []
+  cache-version:
+    description: An optional version number for cache dependencies, e.g. v1
+    type: string
+    default: v1
 
 executor: <<parameters.executor>>
 
@@ -38,11 +42,11 @@ steps:
   - checkout
   - restore_cache:
       keys:
-        - deps-composer-{{ arch }}-{{ checksum "composer.lock" }}
-        - deps-composer-{{ arch }}-
+        - deps-composer-<<parameters.cache-version>>-{{ arch }}-{{ checksum "composer.lock" }}
+        - deps-composer-<<parameters.cache-version>>-{{ arch }}
   - steps: <<parameters.init>>
   - save_cache:
-      key: deps-composer-{{ arch }}-{{ checksum "composer.lock" }}
+      key: deps-composer-<<parameters.cache-version>>-{{ arch }}-{{ checksum "composer.lock" }}
       paths:
         - app/core
         - app/modules/contrib

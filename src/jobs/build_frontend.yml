@@ -42,6 +42,10 @@ parameters:
     type: steps
     description: Run the front-end unit tests.
     default: []
+  cache-version:
+    description: An optional version number for cache dependencies, e.g. v1
+    type: string
+    default: v2
 
 executor: <<parameters.executor>>
 
@@ -49,11 +53,11 @@ steps:
   - checkout
   - restore_cache:
       keys:
-        - deps-node-v2-{{ arch }}-{{ checksum "package-lock.json" }}
-        - deps-node-v2-{{ arch }}-
+        - deps-node-<<parameters.cache-version>>-{{ arch }}-{{ checksum "package-lock.json" }}
+        - deps-node-<<parameters.cache-version>>-{{ arch }}-
   - steps: <<parameters.init>>
   - save_cache:
-      key: deps-node-v2-{{ arch }}-{{ checksum "package-lock.json" }}
+      key: deps-node-<<parameters.cache-version>>-{{ arch }}-{{ checksum "package-lock.json" }}
       paths:
         - ~/.npm
   - steps: <<parameters.lint>>

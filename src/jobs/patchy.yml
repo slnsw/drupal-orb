@@ -12,6 +12,10 @@ parameters:
   ssh_fingerprint:
     description: The SSH fingerprint used for writing back to the project repo.
     type: string
+  cache-version:
+    description: An optional version number for cache dependencies, e.g. v1
+    type: string
+    default: v1
 
 executor: <<parameters.executor>>
 
@@ -22,8 +26,8 @@ steps:
   - checkout
   - restore_cache:
       keys:
-        - deps-composer-{{ arch }}-{{ checksum "composer.lock" }}
-        - deps-composer-{{ arch }}-
+        - deps-composer-<<parameters.cache-version>>-{{ arch }}-{{ checksum "composer.lock" }}
+        - deps-composer-<<parameters.cache-version>>-{{ arch }}
   - run:
       name: Init
       command: make init-backend mkdirs

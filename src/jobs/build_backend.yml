@@ -59,6 +59,7 @@ steps:
       paths:
         - bin
         - app/core
+        - app/libraries
         - app/modules/contrib
         - app/profiles/contrib
         - app/themes/contrib

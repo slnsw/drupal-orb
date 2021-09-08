@@ -6,6 +6,6 @@ description: >
 # This information will be displayed in the orb registry and is not mandatory.
 display:
   home_url: "https://www.previousnext.com.au"
-  source_url: "https://www.github.com/pnx/drupal-orb"
+  source_url: "https://www.github.com/previousnext/drupal-orb"
   orbs:
     slack: circleci/slack@3.4.2

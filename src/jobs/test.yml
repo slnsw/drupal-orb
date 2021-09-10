@@ -67,7 +67,7 @@ steps:
   - store_test_results:
       path: build/logs
   - store_artifacts:
-      path: /tmp/browser_output
+      path: app/sites/simpletest
       destination: tr1
   - store_artifacts:
       path: build/logs/nightwatch

@@ -13,6 +13,10 @@ parameters:
     default: latest
     description: The Selenium Chrome image tag
     type: string
+  chrome_tz:
+    default: "Australia/Sydney"
+    description: The timezone to use for Chrome.
+    type: string
 docker:
   - image: skpr/php-circleci:<<parameters.tag>>
   - image: <<parameters.db_image>>
@@ -20,6 +24,8 @@ docker:
      aws_access_key_id: $SKPR_USERNAME
      aws_secret_access_key: $SKPR_PASSWORD
   - image: selenium/standalone-chrome:<<parameters.chrome_tag>>
+    environment:
+      TZ: <<parameters.chrome_tz>>
 environment:
   COMPOSER_MEMORY_LIMIT: -1
 

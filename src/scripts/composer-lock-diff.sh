@@ -3,7 +3,7 @@ set -eoux pipefail
 IFS=$'\n\t'
 
 # If we are not on a pull request, exit.
-[[ -z "${CIRCLE_PULL_REQUEST}" ]] && exit 0
+[[ ! -v CIRCLE_PULL_REQUEST ]] && exit 0
 echo "CIRCLE_PULL_REQUEST: ${CIRCLE_PULL_REQUEST}"
 
 # Find the base branch this PR is being merged into.

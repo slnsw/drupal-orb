@@ -26,7 +26,7 @@ PULL_REQUEST_ID=${CIRCLE_PULL_REQUEST##*/}
 echo "PULL_REQUEST_ID: ${PULL_REQUEST_ID}"
 
 # Find existing comment, if it exists.
-COMMENT_ID=$(gh api --jq '.[] | select(.body | contains("Composer lock diff")) | .id' /repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${PULL_REQUEST_ID}/comments)
+COMMENT_ID=$(gh api --jq 'map(select(.body | contains("*Composer lock diff*"))) | first .id' /repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${PULL_REQUEST_ID}/comments)
 echo "COMMENT_ID: ${COMMENT_ID}"
 
 echo -e "*Composer lock diff*\n\n" >> /tmp/comment.md

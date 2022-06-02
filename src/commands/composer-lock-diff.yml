@@ -1,0 +1,13 @@
+description: Generates a composer lock diff and posts as a comment.
+steps:
+  - run:
+      name: Check dependencies
+      command: |
+        [[ "$(command -v gh)" ]] || { echo "gh is not installed" 1>&2 ; exit 1; }
+  - run:
+      name: Install composer lock diff
+      command: |
+        composer global require davidrjonas/composer-lock-diff:^1.0
+  - run:
+      name: Post diff to PR
+      command: <<include(scripts/composer-lock-diff.sh)>>

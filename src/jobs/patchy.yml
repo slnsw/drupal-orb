@@ -16,7 +16,10 @@ parameters:
     description: An optional version number for cache dependencies, e.g. v1
     type: string
     default: v1
-
+  post-patch:
+    type: steps
+    description: Provide any optional post-test steps you would like to run.
+    default: []
 executor: <<parameters.executor>>
 
 steps:
@@ -34,3 +37,4 @@ steps:
   - run:
       name: Patchy
       command: <<include(scripts/patchy.sh)>>
+  - steps: <<parameters.post-patch>>

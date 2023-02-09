@@ -54,7 +54,6 @@ steps:
   - restore_cache:
       keys:
         - deps-node-<<parameters.cache-version>>-{{ arch }}-{{ checksum "package-lock.json" }}
-        - deps-node-<<parameters.cache-version>>-{{ arch }}-
   - steps: <<parameters.init>>
   - save_cache:
       key: deps-node-<<parameters.cache-version>>-{{ arch }}-{{ checksum "package-lock.json" }}

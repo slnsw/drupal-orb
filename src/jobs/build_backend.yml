@@ -43,7 +43,6 @@ steps:
   - restore_cache:
       keys:
         - deps-composer-<<parameters.cache-version>>-{{ arch }}-{{ checksum "composer.lock" }}
-        - deps-composer-<<parameters.cache-version>>-{{ arch }}
   - steps: <<parameters.init>>
   - save_cache:
       key: deps-composer-<<parameters.cache-version>>-{{ arch }}-{{ checksum "composer.lock" }}

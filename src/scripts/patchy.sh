@@ -17,12 +17,12 @@ if git diff-files --quiet --ignore-submodules -- composer.lock ; then
 else
   echo "[PATCHY] Updates composer dependencies" >> /tmp/commit-message.txt
   echo "" >> /tmp/commit-message.txt
-  ./bin/composer-lock-diff --md --no-links >> /tmp/lock-diff.txt
+  $COMPOSER_LOCK_DIFF_PATH --md --no-links >> /tmp/lock-diff.txt
   cat /tmp/lock-diff.txt >> /tmp/commit-message.txt
   git add composer.lock
   git commit -F /tmp/commit-message.txt
   make config-import updb config-export
-  git add config-export
+  git add $DRUPAL_CONFIG_EXPORT_DIR
   git commit -m "[PATCHY] Updates config" || echo "No config changes"
   git push -f origin $PATCHY_BRANCH
   # Create a new PR or updating existing.

@@ -7,6 +7,14 @@ of tasks defined. See each job for a description.
 [CircleCI Orb Registry Page](https://circleci.com/orbs/registry/orb/pnx/drupal) - The official registry page of this orb for all versions, executors, commands, and jobs described.
 [CircleCI Orb Docs](https://circleci.com/docs/2.0/orb-intro/#section=configuration) - Docs for using and creating CircleCI Orbs.
 
+## Usage
+
+Set up a Makefile containing the following:
+
+```
+TODO
+```
+
 ## Known Issues
 
 You may get this error when pushing a new PR,

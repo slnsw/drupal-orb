@@ -20,6 +20,14 @@ parameters:
     type: steps
     description: Provide any optional post-test steps you would like to run.
     default: []
+  composer_lock_diff_path:
+    type: string
+    description: The path to the composer-lock-diff binary.
+    default: ./bin/composer-lock-diff
+  config_export_dir:
+    type: string
+    description: The directory to which Drupal configuration is exported.
+    default: config-export
 executor: <<parameters.executor>>
 
 steps:
@@ -30,6 +38,11 @@ steps:
   - restore_cache:
       keys:
         - deps-composer-<<parameters.cache-version>>-{{ arch }}-{{ checksum "composer.lock" }}
+  - run:
+      name: Set environment variables
+      command: |
+        echo 'export DRUPAL_CONFIG_EXPORT_DIR="<< parameters.config_export_dir >>"' >> "$BASH_ENV"
+        echo 'export COMPOSER_LOCK_DIFF_PATH="<< parameters.config_export_dir >>"' >> "$BASH_ENV"
   - run:
       name: Init
       command: make init-backend mkdirs
